@@ -6,14 +6,11 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Presence;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +19,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.happy.util.ChatContent;
@@ -30,7 +26,7 @@ import com.app.happy.util.ChatMsg;
 import com.app.happy.util.TimeRender;
 import com.app.happy.util.XmppTool;
 
-public class FormClient extends Activity {
+public class FormClientActivity extends Activity {
 
 	private MyAdapter adapter;
 	private ArrayList<ChatMsg> listMsg;
@@ -118,7 +114,6 @@ public class FormClient extends Activity {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -130,7 +125,7 @@ public class FormClient extends Activity {
 		private Context cxt;
 		private LayoutInflater inflater;
 
-		public MyAdapter(FormClient formClient) {
+		public MyAdapter(FormClientActivity formClient) {
 			this.cxt = formClient;
 		}
 

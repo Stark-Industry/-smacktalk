@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.app.happy.util.XmppTool;
 
 public class HappySpringActivity extends Activity {
+	
+	private static final String TAG = "HappySpringActivity";
 	private EditText useridText, pwdText;
 	private LinearLayout layout1, layout2;
 	private XmppTool xmppTool;
@@ -26,7 +28,7 @@ public class HappySpringActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		setTitle("HappySpringActivity");
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
@@ -116,7 +118,7 @@ public class HappySpringActivity extends Activity {
 				startActivity(intent);
 				HappySpringActivity.this.finish();
 			} catch (Exception e) {
-				Log.d("x", "in exception ");
+				Log.e(TAG, "in exception "+ e.getMessage());
 				connect.disconnect();
 				handler.sendEmptyMessage(2);
 			}

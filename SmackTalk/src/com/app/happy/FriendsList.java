@@ -43,6 +43,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.constant.ServerSetting;
 import com.app.happy.util.ChatContent;
 import com.app.happy.util.ChatMsg;
 import com.app.happy.util.TimeRender;
@@ -50,7 +51,6 @@ import com.app.happy.util.XmppTool;
 
 public class FriendsList extends Activity {
 
-	private final  String host = "192.168.1.3";
 	private XMPPConnection connect;
 	private ListView list;
 	private ImageView chatImage;
@@ -74,7 +74,7 @@ public class FriendsList extends Activity {
 		setContentView(R.layout.formfriend_list);
 
 		setTitle("Happy Every Day");
-		useName = getIntent().getStringExtra("USERID") + "@" + host;
+		useName = getIntent().getStringExtra("USERID") + "@" + ServerSetting.HOST;
 		connect = new XmppTool().getConnection();
 		cContent = new ChatContent();
 		list = (ListView) findViewById(R.id.ListView01);
@@ -114,7 +114,7 @@ public class FriendsList extends Activity {
 				Intent mIntent = new Intent();
 				mIntent.putExtra("TALKID", myText.getText().toString());
 				mIntent.putExtra("USERID", useName);
-				mIntent.setClass(FriendsList.this, FormClient.class);
+				mIntent.setClass(FriendsList.this, FormClientActivity.class);
 				startActivity(mIntent);
 			}
 		});
@@ -138,7 +138,7 @@ public class FriendsList extends Activity {
 
 	public void myCreateRost(String name) {
 		if (name.indexOf("@") == -1) {
-			name = name + "@" + host;
+			name = name + "@" + ServerSetting.HOST;
 		}
 		try {
 			roster.createEntry(name, null, new String[] { "Friends" });
@@ -151,7 +151,7 @@ public class FriendsList extends Activity {
 	public void getAllUsers() {
 		try {
 			UserSearchManager search = new UserSearchManager(connect);
-			String searchf = "search." + host;
+			String searchf = "search." + ServerSetting.HOST;
 			Form searchForm = search.getSearchForm(searchf);
 			Form answerForm = searchForm.createAnswerForm();
 			answerForm.setAnswer("Username", true);
