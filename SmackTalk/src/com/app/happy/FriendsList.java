@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.constant.ServerSetting;
+import com.app.happy.ui.FormClientActivity;
 import com.app.happy.util.ChatContent;
 import com.app.happy.util.ChatMsg;
 import com.app.happy.util.TimeRender;

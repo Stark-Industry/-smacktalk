@@ -1,4 +1,4 @@
-package com.app.happy;
+package com.app.happy.ui;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.app.happy.R;
+import com.app.happy.R.id;
+import com.app.happy.R.layout;
 import com.app.happy.util.ChatContent;
 import com.app.happy.util.ChatMsg;
 import com.app.happy.util.TimeRender;

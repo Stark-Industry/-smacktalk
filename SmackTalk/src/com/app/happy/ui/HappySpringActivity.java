@@ -1,4 +1,4 @@
-package com.app.happy;
+package com.app.happy.ui;
 
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Presence;
@@ -14,6 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.app.happy.FriendsList;
+import com.app.happy.R;
+import com.app.happy.Register;
+import com.app.happy.R.id;
+import com.app.happy.R.layout;
 import com.app.happy.util.XmppTool;
 
 public class HappySpringActivity extends Activity {
