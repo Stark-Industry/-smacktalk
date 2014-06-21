@@ -22,7 +22,7 @@ import com.app.happy.R.id;
 import com.app.happy.R.layout;
 import com.app.happy.util.XmppTool;
 
-public class HappySpringActivity extends Activity {
+public class MainActivity extends Activity {
 	
 	private static final String TAG = "HappySpringActivity";
 	private EditText useridText, pwdText;
@@ -49,7 +49,7 @@ public class HappySpringActivity extends Activity {
 		xmppTool = new XmppTool();
 		connect = xmppTool.getConnection();
 		if (connect == null) {
-			Toast.makeText(HappySpringActivity.this, "connect failure", 0).show();
+			Toast.makeText(MainActivity.this, "connect failure", 0).show();
 			finish();
 		}
 		Button btsave = (Button) findViewById(R.id.formlogin_btsubmit);
@@ -65,7 +65,7 @@ public class HappySpringActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(HappySpringActivity.this, Register.class));
+			startActivity(new Intent(MainActivity.this, Register.class));
 
 		}
 
@@ -98,7 +98,7 @@ public class HappySpringActivity extends Activity {
 			case 2:
 				layout1.setVisibility(View.GONE);
 				layout2.setVisibility(View.VISIBLE);
-				Toast.makeText(HappySpringActivity.this, "login failure", 0).show();
+				Toast.makeText(MainActivity.this, "login failure", 0).show();
 				break;
 			default:
 				break;
@@ -119,10 +119,10 @@ public class HappySpringActivity extends Activity {
 				connect.login(USERID, PWD);
 				Presence presence = new Presence(Presence.Type.available);
 				connect.sendPacket(presence);
-				Intent intent = new Intent(HappySpringActivity.this, FriendsList.class);
+				Intent intent = new Intent(MainActivity.this, FriendsList.class);
 				intent.putExtra("USERID", USERID);
 				startActivity(intent);
-				HappySpringActivity.this.finish();
+				MainActivity.this.finish();
 			} catch (Exception e) {
 				Log.e(TAG, "in exception "+ e.getMessage());
 				connect.disconnect();
