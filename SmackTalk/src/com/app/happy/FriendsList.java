@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
@@ -79,7 +80,6 @@ public class FriendsList extends Activity {
 		cContent = new ChatContent();
 		list = (ListView) findViewById(R.id.ListView01);
 		cmListener = new CmChatListener();
-		// ��ɶ�̬���飬�������
 		listItem = new ArrayList<HashMap<String, Object>>();
 		nameList = new ArrayList<String>();
 		rosterList = new ArrayList<String>();
@@ -89,18 +89,13 @@ public class FriendsList extends Activity {
 
 		myGetRost();
 
-		// �����������Item�Ͷ�̬�����Ӧ��Ԫ��
-		listItemAdapter = new SimpleAdapter(this, listItem,// ���Դ
-				R.layout.friend_adapter,// ListItem��XMLFʵ��
-				// ��̬������ImageItem��Ӧ������
+		listItemAdapter = new SimpleAdapter(this, listItem,
+				R.layout.friend_adapter,
 				new String[] { "ItemImage", "ItemTitle", "ItemText" },
-				// ImageItem��XML�ļ������һ��ImageView,����TextView ID
 				new int[] { R.id.ItemImage, R.id.ItemTitle, R.id.ItemText });
 
-		// ��Ӳ�����ʾ
 		list.setAdapter(listItemAdapter);
 
-		// ��ӵ��
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -119,15 +114,14 @@ public class FriendsList extends Activity {
 			}
 		});
 
-		// ��ӳ������
 		list.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 
 			@Override
 			public void onCreateContextMenu(ContextMenu menu, View v,
 					ContextMenuInfo menuInfo) {
-				menu.setHeaderTitle("�����˵�-ContextMenu");
-				menu.add(0, 0, 0, "���������˵�0");
-				menu.add(0, 1, 0, "���������˵�1");
+				menu.setHeaderTitle("长按菜单-ContextMenu");
+				menu.add(0, 0, 0, "弹出长按菜单0");
+				menu.add(0, 1, 0, "弹出长按菜单1");
 			}
 		});
 
@@ -143,7 +137,6 @@ public class FriendsList extends Activity {
 		try {
 			roster.createEntry(name, null, new String[] { "Friends" });
 		} catch (XMPPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -187,9 +180,6 @@ public class FriendsList extends Activity {
 	}
 
 	public void myGetRost() {
-		// TODO Auto-generated method stub
-		// ��ȡ�����
-
 		entries = roster.getEntries();
 		listItem.clear();
 		rosterList.clear();
@@ -215,13 +205,12 @@ public class FriendsList extends Activity {
 
 		@Override
 		public void chatCreated(Chat chat, boolean arg1) {
-			// TODO Auto-generated method stub
 			chat.addMessageListener(new MessageListener() {
 				@Override
 				public void processMessage(Chat chat, Message message) {
 					if (message.getBody() != null) {
-						System.out.println(" 2: Received from ��"
-								+ message.getFrom() + "�� message: "
+						System.out.println(" 2: Received from ["
+								+ message.getFrom() + "] message: "
 								+ message.getBody());
 						temp = message.getFrom();
 						chatName = temp.substring(0, temp.indexOf("@"));
@@ -252,32 +241,27 @@ public class FriendsList extends Activity {
 
 		@Override
 		public void entriesAdded(Collection<String> arg0) {
-			// TODO Auto-generated method stub
 			handler.sendEmptyMessage(2);
 		}
 
 		@Override
 		public void entriesDeleted(Collection<String> arg0) {
-			// TODO Auto-generated method stub
 			handler.sendEmptyMessage(2);
 		}
 
 		@Override
 		public void entriesUpdated(Collection<String> arg0) {
-			// TODO Auto-generated method stub
 			handler.sendEmptyMessage(2);
 
 		}
 
 		@Override
 		public void presenceChanged(Presence arg0) {
-			// TODO Auto-generated method stub
 			handler.sendEmptyMessage(2);
 		}
 
 	}
 
-	// �Ƴ���ճ���ռ�е���Դ
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
@@ -288,8 +272,8 @@ public class FriendsList extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.add(0, 1, 1, "��������");
-		menu.add(0, 2, 2, "ˢ���б�");
+		menu.add(0, 1, 1, "查找朋友");
+		menu.add(0, 2, 2, "刷新列表");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -298,10 +282,10 @@ public class FriendsList extends Activity {
 		if (item.getItemId() == 1) {
 			final EditText diaEdit = new EditText(this);
 			AlertDialog dialog = new AlertDialog.Builder(this)
-					.setTitle("������")
+					.setTitle("请输入")
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setView(diaEdit)
-					.setPositiveButton("ȷ��",
+					.setPositiveButton("确定",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -309,7 +293,7 @@ public class FriendsList extends Activity {
 									myCreateRost(temp);
 								}
 							})
-					.setNegativeButton("ȡ��",
+					.setNegativeButton("取消",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -354,25 +338,6 @@ public class FriendsList extends Activity {
 			}
 		};
 	};
-	
-//	public static void sendFile(XMPPConnection connection,  
-//            String user, File file) throws XMPPException, InterruptedException {  
-//          
-//        System.out.println("发送文件开始"+file.getName());  
-//        FileTransferManager transfer = new FileTransferManager(Client.getConnection());  
-//        System.out.println("发送文件给: "+user+Client.getServiceNameWithPre());  
-//        OutgoingFileTransfer out = transfer.createOutgoingFileTransfer(user+Client.getServiceNameWithPre()+"/Smack");//  
-//          
-//        out.sendFile(file, file.getName());  
-//          
-//        System.out.println("//////////");  
-//        System.out.println(out.getStatus());  
-//        System.out.println(out.getProgress());  
-//        System.out.println(out.isDone());  
-//          
-//        System.out.println("//////////");  
-//          
-//        System.out.println("发送文件结束");  
-//    }  
+
 
 }

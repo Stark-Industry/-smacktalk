@@ -2,6 +2,7 @@ package com.app.happy.ui;
 
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Presence;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.app.happy.FriendsList;
 import com.app.happy.R;
 import com.app.happy.Register;
-import com.app.happy.R.id;
-import com.app.happy.R.layout;
 import com.app.happy.util.XmppTool;
 
 public class MainActivity extends Activity {
@@ -51,6 +49,8 @@ public class MainActivity extends Activity {
 		if (connect == null) {
 			Toast.makeText(MainActivity.this, "connect failure", 0).show();
 			finish();
+		}else{
+			Log.d(TAG, "connect user: "+ connect.getUser());
 		}
 		Button btsave = (Button) findViewById(R.id.formlogin_btsubmit);
 		btsave.setOnClickListener(new BtsaveListener());
@@ -66,7 +66,6 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			startActivity(new Intent(MainActivity.this, Register.class));
-
 		}
 
 	}
@@ -119,7 +118,8 @@ public class MainActivity extends Activity {
 				connect.login(USERID, PWD);
 				Presence presence = new Presence(Presence.Type.available);
 				connect.sendPacket(presence);
-				Intent intent = new Intent(MainActivity.this, FriendsList.class);
+				Intent intent = new Intent(MainActivity.this, UploadFileActivity.class);
+//				Intent intent = new Intent(MainActivity.this, FriendsList.class);
 				intent.putExtra("USERID", USERID);
 				startActivity(intent);
 				MainActivity.this.finish();

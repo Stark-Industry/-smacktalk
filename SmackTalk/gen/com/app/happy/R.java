@@ -23,13 +23,14 @@ public final class R {
         public static final int p12=0x7f020009;
     }
     public static final class id {
-        public static final int ItemImage=0x7f050018;
-        public static final int ItemText=0x7f05001a;
-        public static final int ItemTitle=0x7f050019;
+        public static final int ItemImage=0x7f050019;
+        public static final int ItemText=0x7f05001b;
+        public static final int ItemTitle=0x7f05001a;
         public static final int ListView01=0x7f050010;
+        public static final int btn_friendList=0x7f050018;
         public static final int btn_selectFile=0x7f050015;
         public static final int btn_uploadFile=0x7f050017;
-        public static final int chatSuggest=0x7f05001b;
+        public static final int chatSuggest=0x7f05001c;
         public static final int formclient_btattach=0x7f05000b;
         public static final int formclient_btsend=0x7f05000a;
         public static final int formclient_listview=0x7f050008;
@@ -49,10 +50,10 @@ public final class R {
         public static final int formlogin_tv_system=0x7f050001;
         public static final int formlogin_tv_userid=0x7f050002;
         public static final int formlogin_userid=0x7f050003;
-        public static final int frmfiles_icon=0x7f05001e;
-        public static final int frmfiles_listview=0x7f05001d;
-        public static final int frmfiles_name=0x7f05001f;
-        public static final int linearLayout1=0x7f05001c;
+        public static final int frmfiles_icon=0x7f05001f;
+        public static final int frmfiles_listview=0x7f05001e;
+        public static final int frmfiles_name=0x7f050020;
+        public static final int linearLayout1=0x7f05001d;
         public static final int textView1=0x7f05000f;
         public static final int txt_uploadFile=0x7f050016;
     }

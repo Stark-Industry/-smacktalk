@@ -1,9 +1,7 @@
 package com.app.happy.util;
 
 import javax.net.SocketFactory;
-
 import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.provider.PrivacyProvider;
@@ -31,8 +29,10 @@ import org.jivesoftware.smackx.provider.StreamInitiationProvider;
 import org.jivesoftware.smackx.provider.VCardProvider;
 import org.jivesoftware.smackx.provider.XHTMLExtensionProvider;
 import org.jivesoftware.smackx.search.UserSearch;
-import com.app.constant.ServerSetting;
+
 import android.util.Log;
+
+import com.app.constant.ServerSetting;
 
 /**
  * @author Sam.Io
@@ -44,68 +44,75 @@ public class XmppTool {
 	private static final String TAG = "XmppTool";
 
 	private static XMPPConnection mCon = null;
-//	private final static String HOST = "192.168.31.6";
-//	private final static int PORT = 5222;
 
 	private ConnectionConfiguration mConnConfig = null;
 
+	private void initConnConfig(){
+		mConnConfig = new ConnectionConfiguration(ServerSetting.HOST, ServerSetting.PORT);
+		/** 是否启用压缩 */
+//		mConnConfig.setCompressionEnabled(true);
+		/** 是否启用安全验证 */
+		mConnConfig.setSASLAuthenticationEnabled(true);
+//		/** 是
+//		 * 否启用调试 */
+//		mConnConfig.setDebuggerEnabled(false);
+	}
+	
 	public XmppTool() {
 		if (mCon == null) {
 			try {
 				configure(ProviderManager.getInstance());
-				mConnConfig = new ConnectionConfiguration(ServerSetting.HOST, ServerSetting.PORT);
-				/** 是否启用压缩 */
-				mConnConfig.setCompressionEnabled(true);
-				/** 是否启用安全验证 */
-				mConnConfig.setSASLAuthenticationEnabled(true);
-				/** 是否启用调试 */
-				mConnConfig.setDebuggerEnabled(false);
+				initConnConfig();
 				// config.setReconnectionAllowed(true);
 				// config.setRosterLoadedAtLogin(true);
 				mCon = new XMPPConnection(mConnConfig);
-				mCon.addConnectionListener(new ConnectionListener() {
-
-					@Override
-					public void reconnectionSuccessful() {
-						Log.d(TAG, "reconnectionSuccessful");
-					}
-
-					@Override
-					public void reconnectionFailed(Exception arg0) {
-						Log.d(TAG, "reconnectionFailed");
-					}
-
-					@Override
-					public void reconnectingIn(int arg0) {
-						Log.d(TAG, "reconnectingIn");
-					}
-
-					@Override
-					public void connectionClosedOnError(Exception arg0) {
-						Log.d(TAG, "connectionClosedOnError");
-					}
-
-					@Override
-					public void connectionClosed() {
-						Log.d(TAG, "connectionClosed");
-					}
-				});
+//				mCon.addConnectionListener(new ConnectionListener() {
+//
+//					@Override
+//					public void reconnectionSuccessful() {
+//						Log.d(TAG, "reconnectionSuccessful");
+//					}
+//
+//					@Override
+//					public void reconnectionFailed(Exception arg0) {
+//						Log.d(TAG, "reconnectionFailed");
+//					}
+//
+//					@Override
+//					public void reconnectingIn(int arg0) {
+//						Log.d(TAG, "reconnectingIn");
+//					}
+//
+//					@Override
+//					public void connectionClosedOnError(Exception arg0) {
+//						Log.d(TAG, "connectionClosedOnError");
+//					}
+//
+//					@Override
+//					public void connectionClosed() {
+//						Log.d(TAG, "connectionClosed");
+//					}
+//				});
 				mCon.DEBUG_ENABLED = true;
 				mCon.connect();
 			} catch (XMPPException xe) {
 				xe.printStackTrace();
 			}
-
 			Log.d(TAG, mCon.getConnectionID());
 		}
 	}
 
 	public XMPPConnection getConnection() {
-		if (mCon.isConnected()) {
-			return mCon;
-		} else {
-			return null;
+		
+		if(mCon == null){
+			new XmppTool();
 		}
+		if (!mCon.isConnected()) {
+		 mCon = new XMPPConnection(mConnConfig);;
+		} else {
+		}
+		Log.d(TAG, "get connection"+ mCon.isConnected() );
+		return mCon;
 	}
 
 	public void closeConnection() {
