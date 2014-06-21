@@ -8,8 +8,8 @@ import org.jivesoftware.smackx.filetransfer.FileTransferManager;
 import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
+
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -100,6 +100,14 @@ public class UploadFileActivity extends Activity {
 		
 	}
 	
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		 XmppTool.closeConnection();
+	}
+	
+	
 	private void showFileChooser() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("*/*");
@@ -145,21 +153,43 @@ public class UploadFileActivity extends Activity {
 //                         request.reject();
 //                   }
        
-//        System.out.println("发送文件给: "+user+ connection.getServiceNameWithPre());  
-        System.out.println("发送文件给: "+user);   //+ connection.getServiceName()
-//        OutgoingFileTransfer transfer = manager.createOutgoingFileTransfer(user+connection.getServiceName()+"/Smack");//  
+        System.out.println("发送文件给: "+user);  
+//        其中的userID包含三部分，.
+//        A fully-qualified jabber ID consists of a node, a domain, and a resource, 
+//        the user must be connected to the resource in order to be able to recieve the file transfer。
+//        其实也可以说两部分就是xmpp地址+对方客户端
         OutgoingFileTransfer transfer = manager.createOutgoingFileTransfer(connection.getUser());
-        transfer.sendFile(file, file.getName());  
-         // yu@yu-pc/Smack 
+       
+        try{
+        transfer.sendFile(file, file.getName()); 
         while(!transfer.isDone()) {
-            if(transfer.getStatus().equals(Status.error)) {
-                  System.out.println("ERROR!!! " + transfer.getError());
-            } else {
-                  System.out.println(transfer.getStatus());
-                  System.out.println(transfer.getProgress());
-            }
-            Thread.currentThread().sleep(1000);
-      }
+        	if(transfer.getStatus().equals(Status.error)) {
+        		System.out.println("ERROR!!! " + transfer.getError());
+        	} else {
+        		System.out.println(transfer.getStatus());
+        		System.out.println(transfer.getProgress());
+        	}
+        	Thread.currentThread().sleep(1000);
+        }
+         // yu@yu-pc/Smack 
+        }catch(Exception e){
+        	 Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT).show();
+        	 Log.e(TAG, "发送失败 :"+e.getMessage());
+        }finally{
+        	 if(transfer.getStatus().equals(Status.error)){  
+        		 Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT).show();
+            	 Log.e(TAG, "发送失败 ");
+//                 ChatMessage.append(dateUtils.getHM()+"  自己: 传输出错"+"\n");  
+             }else if(transfer.getStatus().equals(Status.complete)){  
+            	 Toast.makeText(context, "发送成功", Toast.LENGTH_SHORT).show();
+            	 Log.e(TAG, "发送成功 ");
+//                  ChatMessage.append(dateUtils.getHM()+"  自己: "+fileName+" 传输完成\n");  
+             }else if(transfer.getStatus().equals(Status.cancelled)){  
+            	 Toast.makeText(context, "取消发送", Toast.LENGTH_SHORT).show();
+            	 Log.e(TAG, "取消发送 ");
+//                  ChatMessage.append(dateUtils.getHM()+frindsXmppAddress+"  "+fileName+" 传输取消\n");  
+             }  
+        }
 //        System.out.println("//////////");  
 //        System.out.println(transfer.getStatus());  
 //        System.out.println(transfer.getProgress());  
@@ -226,12 +256,15 @@ public class UploadFileActivity extends Activity {
 		        System.out.println(""+request.getMimeType());  
 		        java.io.File externalFile = Environment.getExternalStorageDirectory();
 		         java.io.File saveFile = null;
-		        
-
 //					new AlertDialog.Builder(mContext) 
 //					.setTitle(String.format("来自[%s]", request.getRequestor()) )
 //					.setMessage(String.format("文件名: %s, 文件大小：%s\n, 确定吗？\n", fileName,length) )
-//					.setPositiveButton("是", null)
+//					.setPositiveButton("是", new DialogInterface.OnClickListener() {  
+                 
+//public void onClick(DialogInterface dialog, int which) {  
+//dialog.dismiss();  
+//}  
+//} )
 //					.setNegativeButton("否", null)
 //					.show();
 //		         
@@ -256,7 +289,10 @@ public class UploadFileActivity extends Activity {
 		        System.out.println("接收文件开始.....");  
 		        try {
 					inTransfer.recieveFile(new java.io.File(saveFile, fileName) );
+					 Toast.makeText(mContext, "接收成功!", Toast.LENGTH_SHORT).show();
 				} catch (XMPPException e) {
+					  Toast.makeText(mContext, "接收失败!",
+						      Toast.LENGTH_SHORT).show();
 					e.printStackTrace();
 				} 
 		        System.out.println("接收文件结束.....");  
@@ -337,6 +373,15 @@ public class UploadFileActivity extends Activity {
 		  
 //		    }  
 //		}
+		
+		
+		
+		
 	}
 	
+	 
+	 
+	 
+	 
+	 
 //}

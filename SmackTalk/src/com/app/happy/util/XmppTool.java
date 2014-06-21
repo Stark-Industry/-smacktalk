@@ -1,12 +1,19 @@
 package com.app.happy.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.net.SocketFactory;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.provider.PrivacyProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.GroupChatInvitation;
+import org.jivesoftware.smackx.OfflineMessageManager;
 import org.jivesoftware.smackx.PrivateDataManager;
 import org.jivesoftware.smackx.bytestreams.socks5.provider.BytestreamsProvider;
 import org.jivesoftware.smackx.packet.ChatStateExtension;
@@ -115,7 +122,7 @@ public class XmppTool {
 		return mCon;
 	}
 
-	public void closeConnection() {
+	public static void closeConnection() {
 		if (mCon != null) {
 			mCon.disconnect();
 		}
@@ -309,4 +316,57 @@ public class XmppTool {
 //	        }
 //	    }
 
+//	OfflineMessageManager offlineManager = new OfflineMessageManager(  
+//            mCon);  
+//    try {  
+//        Iterator<org.jivesoftware.smack.packet.Message> it = offlineManager  
+//                .getMessages();  
+//
+//        System.out.println(offlineManager.supportsFlexibleRetrieval());  
+//        System.out.println("离线消息数量: " + offlineManager.getMessageCount());  
+//
+//          
+//        Map<String,ArrayList<Message>> offlineMsgs = new HashMap<String,ArrayList<Message>>();  
+//          
+//        while (it.hasNext()) {  
+//            org.jivesoftware.smack.packet.Message message = it.next();  
+//            System.out  
+//                    .println("收到离线消息, Received from 【" + message.getFrom()  
+//                            + "】 message: " + message.getBody());  
+//            String fromUser = message.getFrom().split("/")[0];  
+//
+//            if(offlineMsgs.containsKey(fromUser))  
+//            {  
+//                offlineMsgs.get(fromUser).add(message);  
+//            }else{  
+//                ArrayList<Message> temp = new ArrayList<Message>();  
+//                temp.add(message);  
+//                offlineMsgs.put(fromUser, temp);  
+//            }  
+//        }  
+//
+//        //在这里进行处理离线消息集合......  
+//        Set<String> keys = offlineMsgs.keySet();  
+//        Iterator<String> offIt = keys.iterator();  
+//        while(offIt.hasNext())  
+//        {  
+//            String key = offIt.next();  
+//            ArrayList<Message> ms = offlineMsgs.get(key);  
+//            TelFrame tel = new TelFrame(key);  
+//            ChatFrameThread cft = new ChatFrameThread(key, null);  
+//            cft.setTel(tel);  
+//            cft.start();  
+//            for (int i = 0; i < ms.size(); i++) {  
+//                tel.messageReceiveHandler(ms.get(i));  
+//            }  
+//        }  
+//          
+//          
+//        offlineManager.deleteMessages();  
+//    } catch (Exception e) {  
+//        e.printStackTrace();  
+//    }  
+	
+	
+	
 }
