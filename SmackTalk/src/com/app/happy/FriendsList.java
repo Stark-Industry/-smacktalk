@@ -354,5 +354,25 @@ public class FriendsList extends Activity {
 			}
 		};
 	};
+	
+//	public static void sendFile(XMPPConnection connection,  
+//            String user, File file) throws XMPPException, InterruptedException {  
+//          
+//        System.out.println("发送文件开始"+file.getName());  
+//        FileTransferManager transfer = new FileTransferManager(Client.getConnection());  
+//        System.out.println("发送文件给: "+user+Client.getServiceNameWithPre());  
+//        OutgoingFileTransfer out = transfer.createOutgoingFileTransfer(user+Client.getServiceNameWithPre()+"/Smack");//  
+//          
+//        out.sendFile(file, file.getName());  
+//          
+//        System.out.println("//////////");  
+//        System.out.println(out.getStatus());  
+//        System.out.println(out.getProgress());  
+//        System.out.println(out.isDone());  
+//          
+//        System.out.println("//////////");  
+//          
+//        System.out.println("发送文件结束");  
+//    }  
 
 }
