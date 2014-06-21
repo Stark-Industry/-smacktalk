@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,13 @@ public class HappySpringActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+if (android.os.Build.VERSION.SDK_INT > 9) {
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    StrictMode.setThreadPolicy(policy);
+}
+		
+		
 		setContentView(R.layout.formlogin);
 		this.useridText = (EditText) findViewById(R.id.formlogin_userid);
 		this.pwdText = (EditText) findViewById(R.id.formlogin_pwd);

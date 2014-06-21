@@ -39,7 +39,7 @@ import android.util.Log;
 public class XmppTool {
 
 	private static XMPPConnection con = null;
-	final private static String host = "192.168.1.244";
+	final private static String host = "192.168.31.6";
 	
 	public XmppTool() {
 		if(con == null){
