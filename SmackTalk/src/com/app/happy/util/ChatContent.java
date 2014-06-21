@@ -2,9 +2,6 @@ package com.app.happy.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-
-import android.util.Log;
 
 public class ChatContent {
 	

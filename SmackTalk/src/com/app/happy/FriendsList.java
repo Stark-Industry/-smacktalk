@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
@@ -24,7 +23,6 @@ import org.jivesoftware.smackx.search.UserSearchManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +50,7 @@ import com.app.happy.util.XmppTool;
 
 public class FriendsList extends Activity {
 
-	final private String host = "192.168.1.3";
+	private final  String host = "192.168.1.3";
 	private XMPPConnection connect;
 	private ListView list;
 	private ImageView chatImage;
@@ -81,7 +79,7 @@ public class FriendsList extends Activity {
 		cContent = new ChatContent();
 		list = (ListView) findViewById(R.id.ListView01);
 		cmListener = new CmChatListener();
-		// Éú³É¶¯Ì¬Êý×é£¬¼ÓÈëÊý¾Ý
+		// ï¿½ï¿½É¶ï¿½Ì¬ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		listItem = new ArrayList<HashMap<String, Object>>();
 		nameList = new ArrayList<String>();
 		rosterList = new ArrayList<String>();
@@ -91,18 +89,18 @@ public class FriendsList extends Activity {
 
 		myGetRost();
 
-		// Éú³ÉÊÊÅäÆ÷µÄItemºÍ¶¯Ì¬Êý×é¶ÔÓ¦µÄÔªËØ
-		listItemAdapter = new SimpleAdapter(this, listItem,// Êý¾ÝÔ´
-				R.layout.friend_adapter,// ListItemµÄXMLFÊµÏÖ
-				// ¶¯Ì¬Êý×éÓëImageItem¶ÔÓ¦µÄ×ÓÏî
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Itemï¿½Í¶ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ôªï¿½ï¿½
+		listItemAdapter = new SimpleAdapter(this, listItem,// ï¿½ï¿½ï¿½Ô´
+				R.layout.friend_adapter,// ListItemï¿½ï¿½XMLFÊµï¿½ï¿½
+				// ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ImageItemï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				new String[] { "ItemImage", "ItemTitle", "ItemText" },
-				// ImageItemµÄXMLÎÄ¼þÀïÃæµÄÒ»¸öImageView,Á½¸öTextView ID
+				// ImageItemï¿½ï¿½XMLï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ImageView,ï¿½ï¿½ï¿½ï¿½TextView ID
 				new int[] { R.id.ItemImage, R.id.ItemTitle, R.id.ItemText });
 
-		// Ìí¼Ó²¢ÇÒÏÔÊ¾
+		// ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 		list.setAdapter(listItemAdapter);
 
-		// Ìí¼Óµã»÷
+		// ï¿½ï¿½Óµï¿½ï¿½
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -121,15 +119,15 @@ public class FriendsList extends Activity {
 			}
 		});
 
-		// Ìí¼Ó³¤°´µã»÷
+		// ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		list.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 
 			@Override
 			public void onCreateContextMenu(ContextMenu menu, View v,
 					ContextMenuInfo menuInfo) {
-				menu.setHeaderTitle("³¤°´²Ëµ¥-ContextMenu");
-				menu.add(0, 0, 0, "µ¯³ö³¤°´²Ëµ¥0");
-				menu.add(0, 1, 0, "µ¯³ö³¤°´²Ëµ¥1");
+				menu.setHeaderTitle("ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½-ContextMenu");
+				menu.add(0, 0, 0, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½0");
+				menu.add(0, 1, 0, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½1");
 			}
 		});
 
@@ -190,7 +188,7 @@ public class FriendsList extends Activity {
 
 	public void myGetRost() {
 		// TODO Auto-generated method stub
-		// »ñÈ¡»¨Ãû²á
+		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		entries = roster.getEntries();
 		listItem.clear();
@@ -222,8 +220,8 @@ public class FriendsList extends Activity {
 				@Override
 				public void processMessage(Chat chat, Message message) {
 					if (message.getBody() != null) {
-						System.out.println(" 2: Received from ¡¾"
-								+ message.getFrom() + "¡¿ message: "
+						System.out.println(" 2: Received from ï¿½ï¿½"
+								+ message.getFrom() + "ï¿½ï¿½ message: "
 								+ message.getBody());
 						temp = message.getFrom();
 						chatName = temp.substring(0, temp.indexOf("@"));
@@ -279,7 +277,7 @@ public class FriendsList extends Activity {
 
 	}
 
-	// ÍÆ³öÇå¿Õ³ÌÐòÕ¼ÓÐµÄ×ÊÔ´
+	// ï¿½Æ³ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½Õ¼ï¿½Ðµï¿½ï¿½ï¿½Ô´
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
@@ -290,8 +288,8 @@ public class FriendsList extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.add(0, 1, 1, "²éÕÒÅóÓÑ");
-		menu.add(0, 2, 2, "Ë¢ÐÂÁÐ±í");
+		menu.add(0, 1, 1, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		menu.add(0, 2, 2, "Ë¢ï¿½ï¿½ï¿½Ð±ï¿½");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -300,10 +298,10 @@ public class FriendsList extends Activity {
 		if (item.getItemId() == 1) {
 			final EditText diaEdit = new EditText(this);
 			AlertDialog dialog = new AlertDialog.Builder(this)
-					.setTitle("ÇëÊäÈë")
+					.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setView(diaEdit)
-					.setPositiveButton("È·¶¨",
+					.setPositiveButton("È·ï¿½ï¿½",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -311,7 +309,7 @@ public class FriendsList extends Activity {
 									myCreateRost(temp);
 								}
 							})
-					.setNegativeButton("È¡Ïû",
+					.setNegativeButton("È¡ï¿½ï¿½",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {

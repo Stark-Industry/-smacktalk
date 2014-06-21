@@ -1,16 +1,7 @@
 package com.app.happy;
 
-import org.jivesoftware.smack.PacketCollector;
-import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.filter.AndFilter;
-import org.jivesoftware.smack.filter.PacketFilter;
-import org.jivesoftware.smack.filter.PacketIDFilter;
-import org.jivesoftware.smack.filter.PacketTypeFilter;
-import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.packet.Registration;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.app.happy.util.XmppTool;
 
 public class HappySpringActivity extends Activity {
@@ -36,13 +26,12 @@ public class HappySpringActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-if (android.os.Build.VERSION.SDK_INT > 9) {
-    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-    StrictMode.setThreadPolicy(policy);
-}
-		
-		
+
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
+
 		setContentView(R.layout.formlogin);
 		this.useridText = (EditText) findViewById(R.id.formlogin_userid);
 		this.pwdText = (EditText) findViewById(R.id.formlogin_pwd);
@@ -52,8 +41,7 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 		xmppTool = new XmppTool();
 		connect = xmppTool.getConnection();
 		if (connect == null) {
-			Toast.makeText(HappySpringActivity.this, "connect failure", 0)
-					.show();
+			Toast.makeText(HappySpringActivity.this, "connect failure", 0).show();
 			finish();
 		}
 		Button btsave = (Button) findViewById(R.id.formlogin_btsubmit);
@@ -71,7 +59,6 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 		public void onClick(View v) {
 			startActivity(new Intent(HappySpringActivity.this, Register.class));
 
-			
 		}
 
 	}
@@ -79,7 +66,6 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 	public class BtsaveListener implements OnClickListener {
 
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			new LoginThread().start();
 
 		}
@@ -89,7 +75,6 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 	public class BtcancelListener implements OnClickListener {
 
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			finish();
 		}
 
@@ -105,8 +90,7 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 			case 2:
 				layout1.setVisibility(View.GONE);
 				layout2.setVisibility(View.VISIBLE);
-				Toast.makeText(HappySpringActivity.this, "login failure", 0)
-						.show();
+				Toast.makeText(HappySpringActivity.this, "login failure", 0).show();
 				break;
 			default:
 				break;
@@ -115,10 +99,11 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 	};
 
 	public class LoginThread extends Thread {
-		final String USERID =  useridText.getText().toString();
+		final String USERID = useridText.getText().toString();
 		final String PWD = pwdText.getText().toString();
-//		final String USERID =  "lexus3";
-//		final String PWD =  "1";
+
+		// final String USERID = "lexus3";
+		// final String PWD = "1";
 
 		public void run() {
 			handler.sendEmptyMessage(1);
@@ -126,8 +111,7 @@ if (android.os.Build.VERSION.SDK_INT > 9) {
 				connect.login(USERID, PWD);
 				Presence presence = new Presence(Presence.Type.available);
 				connect.sendPacket(presence);
-				Intent intent = new Intent(HappySpringActivity.this,
-						FriendsList.class);
+				Intent intent = new Intent(HappySpringActivity.this, FriendsList.class);
 				intent.putExtra("USERID", USERID);
 				startActivity(intent);
 				HappySpringActivity.this.finish();

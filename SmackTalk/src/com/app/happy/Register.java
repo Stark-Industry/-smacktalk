@@ -22,7 +22,6 @@ public class Register extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		connect = new XmppTool().getConnection();
@@ -44,19 +43,19 @@ public class Register extends Activity {
 		// Stop queuing results
 		collector.cancel();
 		if (result == null) {
-			Toast.makeText(getApplicationContext(), "·þÎñÆ÷Ã»ÓÐ·µ»Ø½á¹û", Toast.LENGTH_LONG)
+			Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð·ï¿½ï¿½Ø½ï¿½ï¿½", Toast.LENGTH_LONG)
 					.show();
 		} else if (result.getType() == IQ.Type.ERROR) {
 			if (result.getError().toString().equalsIgnoreCase("conflict(409)")) {
-				Toast.makeText(getApplicationContext(), "Õâ¸öÕËºÅÒÑ¾­´æÔÚ", Toast.LENGTH_LONG)
+				Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG)
 						.show();
 			} else {
-				Toast.makeText(getApplicationContext(), "¹§Ï²Äã£¬×¢²áÊ§°Ü", Toast.LENGTH_LONG)
+				Toast.makeText(getApplicationContext(), "ï¿½ï¿½Ï²ï¿½ã£¬×¢ï¿½ï¿½Ê§ï¿½ï¿½", Toast.LENGTH_LONG)
 						.show();
 			}
 		} else if (result.getType() == IQ.Type.RESULT) {
 			System.out.println("good");
-			Toast.makeText(getApplicationContext(), "Ô¤×£ÁÄÌìÓä¿ì", Toast.LENGTH_LONG)
+			Toast.makeText(getApplicationContext(), "Ô¤×£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG)
 					.show();
 		}
 
