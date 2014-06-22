@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.happy.FriendsList;
 import com.app.happy.R;
 import com.app.happy.util.FileUtils;
 import com.app.happy.util.XmppTool;
@@ -104,9 +103,9 @@ public class UploadFileActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(UploadFileActivity.this, FriendsList.class);
-				intent.putExtra("UserId", loginName);
-				startActivity(intent);
+				Intent intent = new Intent(UploadFileActivity.this, FriendsListActivity.class);
+				intent.putExtra("USERID", loginName);
+				startActivity(intent);  
 			}
 		});
 
