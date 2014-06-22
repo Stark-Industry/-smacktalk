@@ -25,7 +25,7 @@
         </activity>
         
          <activity
-         android:name="com.app.happy.ui.FormClientActivityrmClientActivity"
+         android:name="com.app.happy.ui.FormClientActivity"
             android:label="@string/app_name" >          
         </activity>
         
