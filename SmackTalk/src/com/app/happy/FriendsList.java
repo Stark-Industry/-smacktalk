@@ -73,7 +73,6 @@ public class FriendsList extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.formfriend_list);
-
 		setTitle("Happy Every Day");
 		useName = getIntent().getStringExtra("USERID") + "@" + ServerSetting.HOST;
 		connect = new XmppTool().getConnection();
@@ -83,7 +82,10 @@ public class FriendsList extends Activity {
 		listItem = new ArrayList<HashMap<String, Object>>();
 		nameList = new ArrayList<String>();
 		rosterList = new ArrayList<String>();
-
+		
+//		The roster lets you keep track of the availability ("presence") of other users.
+//		A roster also allows you to organize users into groups such as "Friends" and "Co-workers".
+//		Other IM systems refer to the roster as the buddy list, contact list, etc.
 		roster = connect.getRoster();
 		roster.setSubscriptionMode(Roster.SubscriptionMode.accept_all);
 
