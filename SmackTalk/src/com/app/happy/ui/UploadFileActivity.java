@@ -38,6 +38,7 @@ public class UploadFileActivity extends Activity {
 	private TextView txt_uploadFile;
 	private XMPPConnection con;
 	private String user;
+	private  FileTransferManager manager = null;
 	
 //	private java.io.File saveFile = null;
 //	private static final String receiveFileDir = "receive";
@@ -57,6 +58,12 @@ public class UploadFileActivity extends Activity {
 			con = new XmppTool().getConnection();
 			String user1 = con.getUser();
 			Log.d(TAG, "c user is "+user1); //  yu@yu-pc/Smack 
+		}
+ 		try {
+ 			manager = new FileTransferManager(con);
+ 			manager.addFileTransferListener(new RecFileTransferListener(this));
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
 		}
 		
 		btn_selectFile.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +90,7 @@ public class UploadFileActivity extends Activity {
 				Log.d(TAG, "upload file");
 				if(!selectedFile.isEmpty()){
 					try {
-//						new XmppTool().getConnection();
-						sendFile(new XmppTool().getConnection(), "ruan@yu-pc/Smack", new java.io.File(selectedFile) , UploadFileActivity.this);
+						sendFile(con, "ruan@yu-pc/Smack", new java.io.File(selectedFile) , UploadFileActivity.this);
 					} catch (XMPPException e) {
 						Log.e(TAG, "send file XMPPException "+e.getMessage());
 						e.printStackTrace();
@@ -140,7 +146,8 @@ public class UploadFileActivity extends Activity {
             String user, java.io.File file, Context context) throws XMPPException, InterruptedException {  
 //		 yu@yu-pc/Smack 
         System.out.println("发送文件开始"+file.getName());  
-       final FileTransferManager manager = new FileTransferManager(connection);  
+        final FileTransferManager manager=	new FileTransferManager(connection);  
+        
        // Create the listener
        manager.addFileTransferListener(new RecFileTransferListener(context));
                    // Check to see if the request should be accepted
