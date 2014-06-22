@@ -1,19 +1,12 @@
 package com.app.happy.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import javax.net.SocketFactory;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.provider.PrivacyProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.GroupChatInvitation;
-import org.jivesoftware.smackx.OfflineMessageManager;
 import org.jivesoftware.smackx.PrivateDataManager;
 import org.jivesoftware.smackx.bytestreams.socks5.provider.BytestreamsProvider;
 import org.jivesoftware.smackx.packet.ChatStateExtension;
@@ -36,7 +29,6 @@ import org.jivesoftware.smackx.provider.StreamInitiationProvider;
 import org.jivesoftware.smackx.provider.VCardProvider;
 import org.jivesoftware.smackx.provider.XHTMLExtensionProvider;
 import org.jivesoftware.smackx.search.UserSearch;
-
 import android.util.Log;
 
 import com.app.constant.ServerSetting;
@@ -60,6 +52,8 @@ public class XmppTool {
 //		mConnConfig.setCompressionEnabled(true);
 		/** 是否启用安全验证 */
 		mConnConfig.setSASLAuthenticationEnabled(true);
+		// mConnConfig.setReconnectionAllowed(true);
+		// mConnConfig.setRosterLoadedAtLogin(true);
 //		/** 是
 //		 * 否启用调试 */
 //		mConnConfig.setDebuggerEnabled(false);
@@ -68,10 +62,9 @@ public class XmppTool {
 	public XmppTool() {
 		if (mCon == null) {
 			try {
+				Log.d(TAG, "begin to connect to server...");
 				configure(ProviderManager.getInstance());
 				initConnConfig();
-				// config.setReconnectionAllowed(true);
-				// config.setRosterLoadedAtLogin(true);
 				mCon = new XMPPConnection(mConnConfig);
 //				mCon.addConnectionListener(new ConnectionListener() {
 //
@@ -103,6 +96,7 @@ public class XmppTool {
 				mCon.DEBUG_ENABLED = true;
 				mCon.connect();
 			} catch (XMPPException xe) {
+				Log.e(TAG, "connect error :"+xe.getMessage() );
 				xe.printStackTrace();
 			}
 			Log.d(TAG, mCon.getConnectionID());

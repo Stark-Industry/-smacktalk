@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.happy.R;
-import com.app.happy.Register;
 import com.app.happy.util.XmppTool;
 
 public class MainActivity extends Activity {
@@ -65,7 +64,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(MainActivity.this, Register.class));
+			startActivity(new Intent(MainActivity.this, RegisterActivity.class));
 		}
 
 	}
