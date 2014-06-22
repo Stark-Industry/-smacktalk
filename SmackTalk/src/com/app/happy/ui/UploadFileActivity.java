@@ -143,41 +143,35 @@ public class UploadFileActivity extends Activity {
 	}
 
 	public static void sendFile(XMPPConnection connection,  
-            String user, java.io.File file, Context context) throws XMPPException, InterruptedException {  
-//		 yu@yu-pc/Smack 
-        System.out.println("发送文件开始"+file.getName());  
+            String receiveUser, java.io.File file, Context context) throws XMPPException, InterruptedException {  
+        System.out.println("发送文件开始"+file.getAbsolutePath() +" is exist "+file.exists()+ "from user "+ connection.getUser());  
         final FileTransferManager manager=	new FileTransferManager(connection);  
-        
-       // Create the listener
-       manager.addFileTransferListener(new RecFileTransferListener(context));
-                   // Check to see if the request should be accepted
-//                   if(shouldAccept(request)) {
-//                         // Accept it
-//                         IncomingFileTransfer transfer = request.accept();
-//                         transfer.recieveFile(new File("shakespeare_complete_works.txt"));
-//                   } else {
-//                         // Reject it
-//                         request.reject();
-//                   }
-       
-        System.out.println("发送文件给: "+user);  
+        System.out.println("发送文件给: "+receiveUser);  
 //        其中的userID包含三部分，.
 //        A fully-qualified jabber ID consists of a node, a domain, and a resource, 
 //        the user must be connected to the resource in order to be able to recieve the file transfer。
 //        其实也可以说两部分就是xmpp地址+对方客户端
-        OutgoingFileTransfer transfer = manager.createOutgoingFileTransfer(connection.getUser());
+        OutgoingFileTransfer transfer = manager.createOutgoingFileTransfer(receiveUser);
        
         try{
         transfer.sendFile(file, file.getName()); 
-        while(!transfer.isDone()) {
-        	if(transfer.getStatus().equals(Status.error)) {
-        		System.out.println("ERROR!!! " + transfer.getError());
-        	} else {
-        		System.out.println(transfer.getStatus());
-        		System.out.println(transfer.getProgress());
-        	}
-        	Thread.currentThread().sleep(1000);
-        }
+        System.out.println("//////////");  
+        System.out.println(file.getAbsolutePath());
+        System.out.println("file length: "+file.length());
+        System.out.println("file last modified: "+file.lastModified());
+        System.out.println(transfer.getStatus());  
+        System.out.println(transfer.getProgress());  
+        System.out.println("is done: "+ transfer.isDone());  
+        System.out.println("//////////");  
+//        while(!transfer.isDone()) {
+//        	if(transfer.getStatus().equals(Status.error)) {
+//        		System.out.println("ERROR!!! " + transfer.getError());
+//        	} else {
+//        		System.out.println(transfer.getStatus());
+//        		System.out.println(transfer.getProgress());
+//        	}
+//        	Thread.currentThread().sleep(1000);
+//        }
          // yu@yu-pc/Smack 
         }catch(Exception e){
         	 Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT).show();
@@ -185,7 +179,7 @@ public class UploadFileActivity extends Activity {
         }finally{
         	 if(transfer.getStatus().equals(Status.error)){  
         		 Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT).show();
-            	 Log.e(TAG, "发送失败 ");
+            	 Log.e(TAG, "发送失败 "+transfer.getException().getMessage());
 //                 ChatMessage.append(dateUtils.getHM()+"  自己: 传输出错"+"\n");  
              }else if(transfer.getStatus().equals(Status.complete)){  
             	 Toast.makeText(context, "发送成功", Toast.LENGTH_SHORT).show();
@@ -238,16 +232,16 @@ public class UploadFileActivity extends Activity {
 		}
 		 
 		 private static final String receiveFileDir = "receive";
-	    public String getFileType(String fileFullName)  
-	    {  
-	        if(fileFullName.contains("."))  
-	        {  
-	            return "."+fileFullName.split("//.")[1];  
-	        }else{  
-	            return fileFullName;  
-	        }  
-	          
-	    }
+//	    public String getFileType(String fileFullName)  
+//	    {  
+//	        if(fileFullName.contains("."))  
+//	        {  
+//	            return "."+fileFullName.split("//.")[1];  
+//	        }else{  
+//	            return fileFullName;  
+//	        }  
+//	          
+//	    }
 
 		@Override
 		public void fileTransferRequest(FileTransferRequest request) {
@@ -304,6 +298,18 @@ public class UploadFileActivity extends Activity {
 				} 
 		        System.out.println("接收文件结束.....");  
 		        }
+		// Create the listener
+//      manager.addFileTransferListener(new RecFileTransferListener(context));
+                  // Check to see if the request should be accepted
+//                  if(shouldAccept(request)) {
+//                        // Accept it
+//                        IncomingFileTransfer transfer = request.accept();
+//                        transfer.recieveFile(new File("shakespeare_complete_works.txt"));
+//                  } else {
+//                        // Reject it
+//                        request.reject();
+//                  }
+		
 //                        + getFileType(fileName)));  
 //		        try {   
 //		            JFileChooser chooser = new JFileChooser();   

@@ -1,7 +1,9 @@
 package com.app.happy.util;
 
 import javax.net.SocketFactory;
+
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.provider.PrivacyProvider;
@@ -29,6 +31,7 @@ import org.jivesoftware.smackx.provider.StreamInitiationProvider;
 import org.jivesoftware.smackx.provider.VCardProvider;
 import org.jivesoftware.smackx.provider.XHTMLExtensionProvider;
 import org.jivesoftware.smackx.search.UserSearch;
+
 import android.util.Log;
 
 import com.app.constant.ServerSetting;
@@ -46,13 +49,13 @@ public class XmppTool {
 
 	private ConnectionConfiguration mConnConfig = null;
 
-	private void initConnConfig(){
-		mConnConfig = new ConnectionConfiguration(ServerSetting.HOST, ServerSetting.PORT);
+	private void initConnConfig(String server, int port){
+		mConnConfig = new ConnectionConfiguration(server, port);
 		/** 是否启用压缩 */
 //		mConnConfig.setCompressionEnabled(true);
 		/** 是否启用安全验证 */
 		mConnConfig.setSASLAuthenticationEnabled(true);
-		// mConnConfig.setReconnectionAllowed(true);
+		 mConnConfig.setReconnectionAllowed(true);
 		// mConnConfig.setRosterLoadedAtLogin(true);
 //		/** 是
 //		 * 否启用调试 */
@@ -64,7 +67,7 @@ public class XmppTool {
 			try {
 				Log.d(TAG, "begin to connect to server...");
 				configure(ProviderManager.getInstance());
-				initConnConfig();
+				initConnConfig(ServerSetting.HOST, ServerSetting.PORT);
 				mCon = new XMPPConnection(mConnConfig);
 //				mCon.addConnectionListener(new ConnectionListener() {
 //
